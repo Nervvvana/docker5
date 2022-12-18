@@ -1,0 +1,22 @@
+name: Docker Image CI 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+
+  build:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Build the Docker image
+        uses: actions/checkout@v2
+      
+      run: |
+        echo "${{ secrets.DOCKER_LOGIN }}" | docker login -u "nikita21vp1" --password-stdin
+        docker build . --file Dockerfile --tag nikita21vp1/app5:latest
+        docker push nikita21vp1/app5:latest
+
