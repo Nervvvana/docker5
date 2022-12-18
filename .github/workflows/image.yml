@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+    
 jobs:
 
   build:
@@ -12,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - uses: actions/checkout@v2
       - name: Build the Docker image
-        uses: actions/checkout@v2
       
       run: |
-        echo "${{ secrets.DOCKER_LOGIN }}" | docker login -u "nikita21vp1" --password-stdin
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "nikita21vp1" --password-stdin
         docker build . --file Dockerfile --tag nikita21vp1/app5:latest
         docker push nikita21vp1/app5:latest
 
